@@ -1,16 +1,14 @@
+CC=~cs9024/bin/dcc
+CFLAGS=-I.
+DEPS=Graph.h Quack.h
+OBJ=GraphAM.o Quack.o owl.o
 
-CC=dcc
-CFLAGS=-c
-all: puzzle
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-puzzle: boardADT.o puzzle.o
+owl: $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS)
 
-boardADT.o: boardADT.c boardADT.h
-	$(CC) $(CFLAGS) boardADT.c
-
-puzzle.o: puzzle.c boardADT.h
-	$(CC) $(CFLAGS) puzzle.c
-
+.PHONY: clean
 clean:
-	rm -f puzzle *.o core *.gch
-
+	rm -f *.o owl core
